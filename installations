@@ -7,3 +7,15 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 Paste the copied text into your shell and press Enter.
 Wait a few seconds for the command to complete.
 If you don't see any errors, you are ready to use Chocolatey! Type choco or choco -? now, or see Getting Started for usage instructions
+
+
+
+
+Scenario: You’re running grafana in kubernetes and need to update the admin password.
+
+Easy one:
+
+NAMESPACE=monitoring
+POD_NAME=$(kubectl get pods  -o=name -n "${NAMESPACE}" | grep grafana | cut -f2 -d\/
+kubectl exec -it -n "${NAMESPACE}" "${POD_NAME}" -- /bin/sh -c "/usr/share/grafana/bin/grafana-cli admin reset-admin-password ${POD_NAME}"
+Using the pod name as the password for the example.
